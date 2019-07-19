@@ -50,7 +50,8 @@
       <template slot="actions" v-if="hasMixin('actionable')">
         <font-awesome id="ellipsis-v" icon="ellipsis-v" @click.stop="onShowActions" />
       </template>
-      </b-table>
+      </b-table>          
+      {{model}}
     </section>
     <FuiTable
       v-model="model2"
@@ -67,6 +68,7 @@
       :filter="filter"
       :filter-function="filterFunction"
       @filtered="onFiltered"
+      @transformed="onTransformed"
     ></FuiTable>
     {{model2}}
     <router-view/>
@@ -143,6 +145,9 @@ export default {
   methods: {
     onShowActions(){
       console.log("Clicked");
+    },
+    onTransformed(value) {
+      console.log("Transformed Data", value);
     },
     registerMixins() {
       this.registeredMixins = this.$options.mixins.map(mixin => mixin.name);

@@ -6,13 +6,21 @@ export default {
   computed: {
     computedItems() {
       // Fallback if various mixins not provided
-      return (
+      let nonPaginatedItems = (
         this.sortedItems ||
         this.filteredItems ||
         this.localItems ||
         []
       ).slice()
-    },
+      this.$emit('transformed', nonPaginatedItems)
+      return (
+        this.paginatedItems ||
+        this.sortedItems ||
+        this.filteredItems ||
+        this.localItems ||
+        []
+      ).slice()
+    }
   }
 }
 </script>
