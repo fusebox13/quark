@@ -1,0 +1,27 @@
+$b-table-sort-icon-ascending: fa-content($fa-var-sort-down) !default;
+$b-table-sort-icon-descending: fa-content($fa-var-sort-up) !default;
+$b-table-sort-icon-null: fa-content($fa-var-sort) !default;
+
+
+%color-darkgrey {
+  background: black;
+}
+
+[aria-sort] {
+  &::after {
+    @extend %fa-icon;
+    @extend .fas;
+    color: grey;
+  }
+  
+  [aria-sort="ascending"]::after {
+    @extend %fa-icon;
+    @extend .fas;
+  }
+  
+
+  [aria-sort="descending"]::after {
+    @extend %fa-icon;
+    @extend .fas;
+  }
+}
