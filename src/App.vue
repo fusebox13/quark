@@ -47,30 +47,11 @@
         <TableConfigurer id="cog-component" v-model="fields" :fields="fields"/> 
       </template>
 
-      <template slot="actions" v-if="hasMixin('actionable')">
-        <font-awesome id="ellipsis-v" icon="ellipsis-v" @click.stop="onShowActions" />
+      <template slot="actions" slot-scope="row" v-if="hasMixin('actionable')">
+        <TableActions :item="row.item" :actions="actions"></TableActions>
       </template>
       </b-table>          
-      {{model}}
     </section>
-    <FuiTable
-      v-model="model2"
-      ref="table" 
-      hover 
-      responsive
-      id="my-table"
-      :fixed="false"
-      selectedVariant="secondary"
-      :per-page="perPage"
-      :current-page="currentPage" 
-      :fields="fields"
-      :items="items" 
-      :filter="filter"
-      :filter-function="filterFunction"
-      @filtered="onFiltered"
-      @transformed="onTransformed"
-    ></FuiTable>
-    {{model2}}
     <router-view/>
   </div>
 </template>
@@ -80,6 +61,7 @@ import Search from '@/components/Search'
 import DataFilter from '@/components/DataFilter'
 import FuiTable from '@/components/FuiTable'
 import TableConfigurer from '@/components/TableConfigurer'
+import TableActions from '@/components/TableActions'
 import Child from '@/components/Child';
 import Parent from '@/components/Parent';
 import Filterable from '@/mixins/Filterable.mixin';
@@ -96,11 +78,16 @@ export default {
     FuiTable,
     DataFilter,
     TableConfigurer,
+    TableActions,
     Child,
     Parent
   },
   data() {
     return {
+      actions: [
+        {name: 'Log', callback: (item) => console.log(item) },
+        {name: 'Alert', callback: (item) => alert(item.name) }, 
+      ],
       fields: [
         { key: 'name', label: 'name', sortable: true },
         { key: 'city', label: 'city', sortable: true },
